@@ -1,0 +1,345 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍒 Qershi mbi Tortë</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Montserrat', sans-serif;
+      background: transparent;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #d2a6a1;
+      padding: 0px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 100;
+    }
+
+    .nav-left a, .nav-right a {
+      color: #4a4a4a;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-left a:hover, .nav-right a:hover {
+      background-color: #c98b87;
+      color: #fff;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      color: #fff;
+      cursor: default;
+    }
+
+    .logo-img {
+      width: 80px;
+      height: auto;
+      margin-right: 12px;
+      border-radius: 10%;
+      opacity: 0.9;
+      border: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      color: #fff;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .logo:hover .logo-text {
+      color: #ffd1d1;
+      transform: scale(1.05);
+    }
+
+    /* Cart & Favorites badges */
+    .cart-link, .favorites-link, .notif-link {
+      position: relative;
+      display: inline-block;
+    }
+    #cart-count, #favorites-count, #notif-count {
+      background: #ff4d4d;
+      color: white;
+      font-size: 0.75em;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      position: absolute;
+      top: -8px;
+      right: -10px;
+    }
+
+    /* Dropdown for notifications */
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 220px;
+      display: none;
+      z-index: 1000;
+    }
+    .dropdown-menu.show { display: block; }
+    .dropdown-menu li {
+      list-style: none;
+      margin: 5px 0;
+    }
+    .dropdown-menu a {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+    }
+    .dropdown-menu a:hover {
+      color: #d32f2f;
+    }
+   .toast {
+    background: #28a745; /* ngjyrë jeshile për sukses */
+    color: white;
+    padding: 12px 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @keyframes fadein {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+    }
+     @keyframes fadeout {
+        from {opacity: 1;}
+        to {opacity: 0; transform: translateY(-20px);}
+        }
+
+    /* Main content – zë hapësirën mes nav & footer */
+    main {
+      flex: 1;
+      margin-top: 60px;   /* sa lartësia e navbar-it */
+      margin-bottom: 50px;/* sa lartësia e footer-it */
+    }
+
+
+    footer {
+      background-color: rgba(210, 166, 161, 0.95);
+      color: #222;
+      text-align: center;
+      padding: 15px 10px;
+      font-weight: 100;
+    }
+    footer p { margin: 10px 0; font-size: 16px; }
+
+    /* Contact Icons */
+    .contact-icons a {
+      margin: 0 10px;
+      color: #222;
+      font-size: 24px;
+      transition: transform 0.3s, color 0.3s;
+    }
+    .contact-icons a:hover {
+      color: #d32f2f;
+      transform: scale(1.3);
+    }
+
+    /* Heart link */
+    .heart-link i {
+      color: white;
+      font-size: 22px;
+      transition: color 0.3s ease;
+    }
+    .heart-link:hover i { color: #ff1493; }
+  </style>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'products' %}">Products</a>
+      <a href="{% url 'about_us' %}">About Us</a>
+      <a href="{% url 'contact_us' %}">Contact Us</a>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="{% static 'images/logooo.png' %}" class="logo-img" alt="Logo Qershi mbi Tortë" />
+      <span class="logo-text">Qershi mbi Tortë</span>
+    </div>
+
+    <div class="nav-right">
+      {% if request.user.is_authenticated %}
+        <a href="#"><i class="fa-regular fa-user"></i> {{ request.user.username }}</a>
+        <a href="{% url 'client_logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      {% else %}
+        <a href="{% url 'client_login' %}"><i class="fa-regular fa-user"></i> Account</a>
+      {% endif %}
+
+      <a href="{% url 'cart' %}" class="cart-link">
+        <i class="fa-solid fa-cart-shopping"></i> Cart
+        <span id="cart-count">{{ request.session.cart_total_items|default:0 }}</span>
+      </a>
+
+      <a href="{% url 'product_search' %}"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+
+      <a href="{% url 'favorite_list' %}" class="favorites-link">
+        <i class="fa-regular fa-heart"></i>
+        <span id="favorites-count">
+           {% if request.user.is_authenticated %}
+              {{ request.user.favorites.count }}
+           {% else %}
+              0
+           {% endif %}
+        </span>
+      </a>
+
+      <a href="{% url 'my_orders' %}" class="orders-link">
+        <i class="fa-solid fa-cookie-bite"></i> Porositë e mia
+      </a>
+
+      <!-- 🔔 Njoftimet -->
+      <a href="#" class="notif-link" aria-label="Notifications">
+        <i class="fa-regular fa-bell"></i>
+        <span id="notif-count">0</span>
+      </a>
+      <ul id="notif-list" class="dropdown-menu"></ul>
+    </div>
+  </div>
+  <div id="toast-container" style="position:fixed; top:20px; right:20px; z-index:9999;"></div>
+
+  <!-- Main -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    🍒 Qershi mbi Tortë © 2025 | Made with ❤️
+    {% if request.path != '/contact-us/' %}
+      <p>Click an icon below to reach us instantly:</p>
+      <div class="contact-icons">
+        <a href="https://wa.me/+355699655754" target="_blank" title="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/qershi_mbi_torte/" target="_blank" title="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="tel:0699655754" title="Call Us">
+          <i class="fa-solid fa-phone"></i>
+        </a>
+      </div>
+    {% endif %}
+
+  </footer>
+
+<script>
+// Update Cart Icon
+function updateCartIcon(newCount) {
+    const cartCount = document.getElementById("cart-count");
+    if (cartCount) {
+        cartCount.textContent = newCount;
+    }
+}
+
+// Toggle dropdown on bell click + mark as read
+const notifLink = document.querySelector(".notif-link");
+const notifList = document.getElementById("notif-list");
+
+notifLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  notifList.classList.toggle("show");
+
+  // vetëm nëse ka njoftime, i markojmë si lexuar
+  const items = notifList.querySelectorAll("li");
+  items.forEach(item => {
+    const notifId = item.getAttribute("data-id");
+    if (notifId) {
+      fetch(`/mark-notification-read/${notifId}/`);
+    }
+  });
+
+  // ulim numrin manualisht pasi hapet dropdown-i
+  document.getElementById("notif-count").textContent = 0;
+});
+
+// Check Notifications
+function checkNotifications() {
+    fetch("{% url 'check_new_notifications' %}")
+        .then(response => response.json())
+        .then(data => {
+            let notifCount = document.getElementById("notif-count");
+            let notifList = document.getElementById("notif-list");
+
+            notifList.innerHTML = "";
+
+            if (data.length > 0) {
+                notifCount.textContent = data.length;
+                data.forEach(n => {
+                    let li = document.createElement("li");
+                    li.setAttribute("data-id", n.id);
+                    li.innerHTML = `<a class="dropdown-item" href="{% url 'my_orders' %}">${n.message}</a>`;
+                    notifList.appendChild(li);
+                });
+            } else {
+                notifCount.textContent = 0;
+            }
+        });
+}
+setInterval(checkNotifications, 5000);
+checkNotifications();
+</script>
+
+<script>
+function showToast(message) {
+    const container = document.getElementById("toast-container");
+    if (!container) return; // sigurohu qe ekziston
+
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 35000);
+}
+</script>
+
+
+</body>
+</html>

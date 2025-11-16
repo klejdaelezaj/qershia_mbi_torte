@@ -1,0 +1,16 @@
+{% extends "shop/navbar_footer.html" %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">📩 Njoftimet e Mia</h2>
+    <div class="list-group">
+        {% for notif in notifications %}
+            <div class="list-group-item {% if not notif.read %}list-group-item-warning{% endif %}">
+                {{ notif.message }}
+                <small class="text-muted d-block">{{ notif.created_at }}</small>
+            </div>
+        {% empty %}
+            <p class="text-muted">Nuk keni njoftime.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

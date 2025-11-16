@@ -1,0 +1,93 @@
+{% extends "shop/navbar_footer.html" %}
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #f9f9f9, #ffe6eb);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .success-container {
+    max-width: 600px;
+    margin: 100px auto;
+    background: #fff;
+    padding: 50px 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    animation: fadeIn 0.8s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .success-icon {
+    width: 100px;
+    height: 100px;
+    background: #4BB543;
+    color: #fff;
+    font-size: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    box-shadow: 0 0 20px rgba(75,181,67,0.6);
+    animation: pop 0.7s ease;
+  }
+
+  @keyframes pop {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+
+  .success-container h1 {
+    color: #222;
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  .success-container p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .success-total {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000;
+    margin: 25px 0;
+  }
+
+
+  .success-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #e63946, #9b2226);
+    color: #fff;
+    padding: 14px 34px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(230,57,70,0.4);
+  }
+
+  .success-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(230,57,70,0.55);
+  }
+</style>
+
+<div class="success-container">
+  <div class="success-icon">✔</div>
+  <h1>Porosia u krye me sukses!</h1>
+  <p>Faleminderit që zgjodhët <strong>Qershia mbi Tortë</strong> 🍒</p>
+  <p class="success-total">Totali: {{ order.total_price|floatformat:0 }} Lekë</p>
+  <a href="{% url 'home' %}" class="success-btn">Kthehu te faqja kryesore</a>
+</div>
+{% endblock %}

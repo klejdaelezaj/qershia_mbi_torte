@@ -1,0 +1,45 @@
+{% extends "shop/navbar_footer.html" %}
+
+<h2>Regjistrimi</h2>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Emri:</label><br>
+        <input type="text" name="first_name" required><br>
+
+        <label>Mbiemri:</label><br>
+        <input type="text" name="last_name" required><br>
+
+        <label>Adresa:</label><br>
+        <input type="text" name="address" required><br>
+
+        <label>Numri i telefonit:</label><br>
+        <input type="tel" name="phone_number"
+               pattern="^\+355\d{9}$"
+               placeholder="+355xxxxxxxxx"
+               required><br>
+        <small>Formati: +355 ndjekur nga 9 shifra</small><br>
+
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+
+        <label>Fjalëkalimi:</label><br>
+        <input type="password" name="password" required><br>
+
+        <label>Konfirmo fjalëkalimin:</label><br>
+        <input type="password" name="confirm_password" required><br><br>
+
+        <button type="submit">Krijo llogari</button>
+    </form>
+
+    <p>Ke një llogari? <a href="{% url 'client_login' %}">Kyçu këtu</a></p>
+{%endblock%}
