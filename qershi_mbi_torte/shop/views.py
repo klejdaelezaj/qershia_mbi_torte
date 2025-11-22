@@ -104,6 +104,7 @@ def client_logout(request):
     messages.success(request, "You are now logged out.")
     return redirect('home')
 
+@login_required
 def add_to_cart(request, product_id):
     # Kontrollo login
     if not request.user.is_authenticated:
