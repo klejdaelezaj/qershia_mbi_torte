@@ -16,80 +16,71 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      display: flex;
-      flex-direction: column;
       font-family: 'Montserrat', sans-serif;
       background: transparent;
     }
 
-    /* Navbar */
+    /* ================= Navbar ================= */
     .navbar {
       background-color: #d2a6a1;
-      padding: 0px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       position: relative;
+      flex-wrap: wrap;
       z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-family: 'Pacifico', cursive;
+      color: #fff;
+      cursor: default;
+      margin: 5px 0;
+    }
+
+    .logo-img {
+      width: 70px;
+      margin-right: 10px;
+      border-radius: 10%;
+      opacity: 0.9;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .logo-img:hover { transform: scale(1.1); opacity: 1; }
+
+    .logo-text { font-size: 1.8rem; transition: color 0.3s ease, transform 0.3s ease; }
+    .logo:hover .logo-text { color: #ffd1d1; transform: scale(1.05); }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .nav-left a, .nav-right a {
       color: #4a4a4a;
       text-decoration: none;
-      margin: 0 10px;
-      font-weight: 500;
+      margin: 5px 8px;
       padding: 6px 12px;
       border-radius: 6px;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
+    .nav-left a:hover, .nav-right a:hover { background-color: #c98b87; color: #fff; }
 
-    .nav-left a:hover, .nav-right a:hover {
-      background-color: #c98b87;
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
       color: #fff;
     }
 
-    /* Logo */
-    .logo {
-      display: flex;
-      align-items: center;
-      font-family: 'Pacifico', cursive;
-      font-size: 2rem;
-      color: #fff;
-      cursor: default;
-    }
-
-    .logo-img {
-      width: 80px;
-      height: auto;
-      margin-right: 12px;
-      border-radius: 10%;
-      opacity: 0.9;
-      border: none;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .logo-img:hover {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-
-    .logo-text {
-      font-size: 2rem;
-      color: #fff;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .logo:hover .logo-text {
-      color: #ffd1d1;
-      transform: scale(1.05);
-    }
-
-    /* Cart & Favorites badges */
-    .cart-link, .favorites-link, .notif-link {
-      position: relative;
-      display: inline-block;
-    }
+    /* Badges */
+    .cart-link, .favorites-link, .notif-link { position: relative; display: inline-block; }
     #cart-count, #favorites-count, #notif-count {
       background: #ff4d4d;
       color: white;
@@ -102,7 +93,6 @@
       right: -10px;
     }
 
-    /* Dropdown for notifications */
     .dropdown-menu {
       position: absolute;
       right: 0;
@@ -116,79 +106,69 @@
       z-index: 1000;
     }
     .dropdown-menu.show { display: block; }
-    .dropdown-menu li {
-      list-style: none;
-      margin: 5px 0;
-    }
-    .dropdown-menu a {
-      text-decoration: none;
-      color: #333;
-      font-size: 14px;
-    }
-    .dropdown-menu a:hover {
-      color: #d32f2f;
-    }
-   .toast {
-    background: #28a745; /* ngjyrë jeshile për sukses */
-    color: white;
-    padding: 12px 20px;
-    margin-top: 10px;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    }
+    .dropdown-menu li { list-style: none; margin: 5px 0; }
+    .dropdown-menu a { text-decoration: none; color: #333; font-size: 14px; }
+    .dropdown-menu a:hover { color: #d32f2f; }
 
-    @keyframes fadein {
-    from {opacity: 0; transform: translateY(-20px);}
-    to {opacity: 1; transform: translateY(0);}
+    /* Toast */
+    .toast {
+      background: #28a745;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 10px;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
     }
-     @keyframes fadeout {
-        from {opacity: 1;}
-        to {opacity: 0; transform: translateY(-20px);}
-        }
+    @keyframes fadein { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes fadeout { from {opacity:1;} to {opacity:0; transform:translateY(-20px);} }
 
-    /* Main content – zë hapësirën mes nav & footer */
-    main {
-      flex: 1;
-      margin-top: 60px;   /* sa lartësia e navbar-it */
-      margin-bottom: 50px;/* sa lartësia e footer-it */
-    }
-
-
+    main { flex: 1; margin-top: 60px; margin-bottom: 50px; padding: 0 10px; }
     footer {
       background-color: rgba(210, 166, 161, 0.95);
-      color: #222;
       text-align: center;
       padding: 15px 10px;
+      color: #222;
       font-weight: 100;
     }
     footer p { margin: 10px 0; font-size: 16px; }
-
-    /* Contact Icons */
-    .contact-icons a {
-      margin: 0 10px;
-      color: #222;
-      font-size: 24px;
-      transition: transform 0.3s, color 0.3s;
-    }
-    .contact-icons a:hover {
-      color: #d32f2f;
-      transform: scale(1.3);
-    }
-
-    /* Heart link */
-    .heart-link i {
-      color: white;
-      font-size: 22px;
-      transition: color 0.3s ease;
-    }
+    .contact-icons a { margin: 0 10px; color: #222; font-size: 24px; transition: transform 0.3s, color 0.3s; }
+    .contact-icons a:hover { color: #d32f2f; transform: scale(1.3); }
+    .heart-link i { color: white; font-size: 22px; transition: color 0.3s ease; }
     .heart-link:hover i { color: #ff1493; }
+
+    /* ================= Mobile Styles ================= */
+    @media screen and (max-width: 768px) {
+      .nav-left, .nav-right {
+        flex-direction: column;
+        width: 100%;
+        display: none; /* fshehur fillimisht */
+      }
+
+      .hamburger { display: block; }
+
+      .nav-left.show, .nav-right.show { display: flex; }
+
+      .logo-img { width: 50px; }
+      .logo-text { font-size: 1.4rem; }
+      .nav-left a, .nav-right a { width: 100%; text-align: center; margin: 5px 0; }
+    }
   </style>
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body>
 
   <!-- Navbar -->
   <div class="navbar">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="{% static 'images/logoo' %}" class="logo-img" alt="Logo Qershi mbi Tortë" />
+      <span class="logo-text">Qershi mbi Tortë</span>
+    </div>
+
+    <!-- Hamburger -->
+    <div class="hamburger"><i class="fa fa-bars"></i></div>
+
+    <!-- Left menu -->
     <div class="nav-left">
       <a href="{% url 'home' %}">Home</a>
       <a href="{% url 'products' %}">Products</a>
@@ -196,12 +176,7 @@
       <a href="{% url 'contact_us' %}">Contact Us</a>
     </div>
 
-    <!-- Logo -->
-    <div class="logo">
-      <img src="{% static '/images/logooo.png' %}" class="logo-img" alt="Logo Qershi mbi Tortë" />
-      <span class="logo-text">Qershi mbi Tortë</span>
-    </div>
-
+    <!-- Right menu -->
     <div class="nav-right">
       {% if request.user.is_authenticated %}
         <a href="#"><i class="fa-regular fa-user"></i> {{ request.user.username }}</a>
@@ -232,14 +207,13 @@
         <i class="fa-solid fa-cookie-bite"></i> Porositë e mia
       </a>
 
-      <!-- 🔔 Njoftimet -->
-      <a href="#" class="notif-link" aria-label="Notifications">
-        <i class="fa-regular fa-bell"></i>
+      <a href="#" class="notif-link"><i class="fa-regular fa-bell"></i>
         <span id="notif-count">0</span>
       </a>
       <ul id="notif-list" class="dropdown-menu"></ul>
     </div>
   </div>
+
   <div id="toast-container" style="position:fixed; top:20px; right:20px; z-index:9999;"></div>
 
   <!-- Main -->
@@ -253,78 +227,66 @@
   </footer>
 
 <script>
-// Update Cart Icon
-function updateCartIcon(newCount) {
-    const cartCount = document.getElementById("cart-count");
-    if (cartCount) {
-        cartCount.textContent = newCount;
-    }
-}
-
-// Toggle dropdown on bell click + mark as read
-const notifLink = document.querySelector(".notif-link");
-const notifList = document.getElementById("notif-list");
-
-notifLink.addEventListener("click", (e) => {
-  e.preventDefault();
-  notifList.classList.toggle("show");
-
-  // vetëm nëse ka njoftime, i markojmë si lexuar
-  const items = notifList.querySelectorAll("li");
-  items.forEach(item => {
-    const notifId = item.getAttribute("data-id");
-    if (notifId) {
-      fetch(`/mark-notification-read/${notifId}/`);
-    }
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLeft = document.querySelector('.nav-left');
+  const navRight = document.querySelector('.nav-right');
+  hamburger.addEventListener('click', () => {
+    navLeft.classList.toggle('show');
+    navRight.classList.toggle('show');
   });
 
-  // ulim numrin manualisht pasi hapet dropdown-i
-  document.getElementById("notif-count").textContent = 0;
-});
+  // Cart & Notifications
+  function updateCartIcon(newCount) {
+      const cartCount = document.getElementById("cart-count");
+      if (cartCount) cartCount.textContent = newCount;
+  }
 
-// Check Notifications
-function checkNotifications() {
+  const notifLink = document.querySelector(".notif-link");
+  const notifList = document.getElementById("notif-list");
+  notifLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    notifList.classList.toggle("show");
+    const items = notifList.querySelectorAll("li");
+    items.forEach(item => {
+      const notifId = item.getAttribute("data-id");
+      if (notifId) fetch(`/mark-notification-read/${notifId}/`);
+    });
+    document.getElementById("notif-count").textContent = 0;
+  });
+
+  function checkNotifications() {
     fetch("{% url 'check_new_notifications' %}")
-        .then(response => response.json())
-        .then(data => {
-            let notifCount = document.getElementById("notif-count");
-            let notifList = document.getElementById("notif-list");
+      .then(response => response.json())
+      .then(data => {
+        let notifCount = document.getElementById("notif-count");
+        let notifList = document.getElementById("notif-list");
+        notifList.innerHTML = "";
+        if (data.length > 0) {
+          notifCount.textContent = data.length;
+          data.forEach(n => {
+            let li = document.createElement("li");
+            li.setAttribute("data-id", n.id);
+            li.innerHTML = `<a href="{% url 'my_orders' %}">${n.message}</a>`;
+            notifList.appendChild(li);
+          });
+        } else notifCount.textContent = 0;
+      });
+  }
+  setInterval(checkNotifications, 5000);
+  checkNotifications();
 
-            notifList.innerHTML = "";
-
-            if (data.length > 0) {
-                notifCount.textContent = data.length;
-                data.forEach(n => {
-                    let li = document.createElement("li");
-                    li.setAttribute("data-id", n.id);
-                    li.innerHTML = `<a class="dropdown-item" href="{% url 'my_orders' %}">${n.message}</a>`;
-                    notifList.appendChild(li);
-                });
-            } else {
-                notifCount.textContent = 0;
-            }
-        });
-}
-setInterval(checkNotifications, 5000);
-checkNotifications();
-</script>
-
-<script>
-function showToast(message) {
+  function showToast(message) {
     const container = document.getElementById("toast-container");
-    if (!container) return; // sigurohu qe ekziston
-
+    if (!container) return;
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.textContent = message;
     container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 35000);
-}
+    setTimeout(() => { toast.remove(); }, 3500);
+  }
 </script>
-
 
 </body>
 </html>
+
