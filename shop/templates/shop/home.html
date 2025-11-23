@@ -1,0 +1,104 @@
+{% extends "shop/navbar_footer.html" %}
+
+{% block content %}
+<style>
+main {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+}
+
+/* Seksioni Hero */
+.bg-home {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    text-align: center;
+    background: #000; /* fallback */
+    padding-top: 120px; /* rregulluar ; ne vend te ] */
+}
+
+/* Foto si background nga lart */
+.bg-home::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: url("/media/images/3.JPG") top center/cover no-repeat;
+    opacity: 0.8;
+    z-index: 0;
+}
+
+.bg-home .content {
+    position: relative;
+    z-index: 1;
+    padding-top: 120px;
+}
+
+/* Tekstet */
+.bg-home h1, .bg-home h2, .bg-home p {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    transition: transform 0.3s ease-in-out;
+}
+h1:hover { transform: scale(1.1); }
+
+h2 { font-size: 2em; margin-bottom: 10px; }
+p  { font-size: 1.2em; margin-bottom: 20px; }
+
+/* Butonat */
+.bg-home .btns {
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top: 20px;
+}
+
+.bg-home .btns a {
+    padding:12px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+.bg-home .btn-primary {
+    background:#c96f6b; color:#fff;
+}
+.bg-home .btn-outline {
+    background:#fff; color:#c96f6b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bg-home .content { padding-top: 80px; }
+  h1 { font-size: 2.2em; }
+  h2 { font-size: 1.5em; }
+  p  { font-size: 1em; }
+}
+</style>
+
+<div class="bg-home">
+    <div class="content">
+        <h1>Miresevini ne Pasticeri Qershi mbi Torte!</h1>
+        <h2>Your Sweet Destination</h2>
+        <p>Explore our fresh creations and taste happiness in every bite.</p>
+
+        <div class="btns">
+            <a href="{% url 'products' %}" class="btn-primary">Shfleto Produktet</a>
+            <a href="{% url 'about_us' %}" class="btn-outline">Rreth Nesh</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

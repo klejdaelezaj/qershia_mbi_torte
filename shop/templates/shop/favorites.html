@@ -1,0 +1,175 @@
+{% extends "shop/navbar_footer.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .favorites-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .favorites-container h1 {
+    text-align: center;
+    color: #d63384;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+  }
+
+  .favorite-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    background: #fff5f7;
+  }
+
+  .favorite-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+  }
+
+  .favorite-card-content {
+    flex: 1;
+  }
+
+  .favorite-card-content h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .favorite-card-content .price {
+    color: #c2185b;
+    font-weight: 600;
+    margin: 5px 0;
+  }
+
+  .favorite-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .btn-success, .btn-danger {
+    border: none;
+    padding: 6px 12px;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn-success { background: #28a745; }
+  .btn-success:hover { background: #218838; }
+
+  .btn-danger { background: #dc3545; }
+  .btn-danger:hover { background: #c82333; }
+
+  a.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #d63384;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+  }
+
+  a.back-link:hover { opacity: 0.7; }
+</style>
+
+<div class="favorites-container">
+  <h1>❤️ Produktet e mia të preferuara</h1>
+  <hr>
+
+
+  {% if favorites %}
+    {% for fav in favorites %}
+      <div class="favorite-card" id="fav-{{ fav.product.id }}">
+        <img src="{{ fav.product.image.url }}" alt="{{ fav.product.name }}">
+
+        <div class="favorite-card-content">
+          <h4>{{ fav.product.name }}</h4>
+          <p class="price">{{ fav.product.price|floatformat:0 }} Lekë</p>
+
+          <div class="favorite-actions">
+            <button class="btn-success move-to-cart" data-id="{{ fav.product.id }}">
+              <i class="fa fa-cart-plus"></i> Shto në shportë
+            </button>
+
+            <button class="btn-danger remove-fav" data-id="{{ fav.product.id }}">
+              <i class="fa fa-trash"></i> Hiq
+            </button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center; color:#666;">🍒 S'ke asnjë produkt te favoritet.</p>
+  {% endif %}
+
+  <p style="text-align:center;">
+    <a class="back-link" href="{% url 'products' %}">⬅ Kthehu te produktet</a>
+  </p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Shto në shportë
+    document.querySelectorAll(".move-to-cart").forEach(btn => {
+        btn.addEventListener("click", function() {
+            let productId = this.dataset.id;
+            fetch(`/favorites/move-to-cart/${productId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("cart-count").textContent = data.cart_count;
+                    document.getElementById("favorites-count").textContent = data.fav_count;
+                    document.getElementById(`fav-${productId}`).remove();
+                }
+            });
+        });
+    });
+</script>
+
+ <script>
+document.querySelectorAll(".remove-fav").forEach(btn => {
+    btn.addEventListener("click", function() {
+        let productId = this.dataset.id;
+
+        fetch(`/favorites/remove/${productId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Hiqe elementin nga DOM pa rifreskuar faqen
+                this.closest(".card").remove();
+            } else {
+                alert("Nuk u hoq dot nga favorite!");
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

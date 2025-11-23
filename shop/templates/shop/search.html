@@ -1,0 +1,143 @@
+{% extends "shop/navbar_footer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="search-container">
+  <h1> Gjej ëmbëlsirën tënde të preferuar:</h1>
+
+  <form method="get" action="{% url 'product_search' %}">
+    <input type="text" name="q" value="{{ q }}" placeholder="Kërko produkte...">
+    <button type="submit">Kërko</button>
+  </form>
+
+  <div class="search-results">
+    {% for p in products %}
+      <a href="{% url 'products' %}#product-{{ p.id }}" class="product-card">
+        {% if p.image %}
+          <img src="{{ p.image.url }}" alt="{{ p.name }}">
+        {% else %}
+          <img src="{% static 'images/placeholder.png' %}" alt="No image">
+        {% endif %}
+        <div class="product-info">
+          <h2>{{ p.name }}</h2>
+         <p>{{ p.price|floatformat:0 }} Lekë/copë</p>
+        </div>
+      </a>
+    {% empty %}
+      <p class="no-results">Nuk u gjet asnjë produkt.</p>
+    {% endfor %}
+  </div>
+
+  {% if user.is_authenticated %}
+    <p style="text-align:center; margin-top:30px;">
+      <a href="{% url 'favorite_list' %}" class="favorites-btn">
+        ❤️ Shikoni të preferuarat e tua
+      </a>
+    </p>
+  {% endif %}
+</div>
+
+<style>
+.search-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+.search-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Pacifico', cursive;
+  color: #c33;
+}
+.search-container form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+.search-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+}
+.search-container button {
+  padding: 10px 16px;
+  border: none;
+  background: #c33;
+  color: white;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.3s ease;
+}
+.search-container button:hover { background: #a22; }
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.product-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+.product-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+.product-info {
+  padding: 12px;
+  text-align: center;
+}
+.product-info h2 {
+  font-size: 1.1em;
+  margin: 8px 0;
+}
+.product-info p {
+  color: #c33;
+  font-weight: bold;
+}
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+/* Butoni i favorites */
+.favorites-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #e63946, #b51730);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(230,57,70,0.35);
+}
+.favorites-btn:hover {
+  background: linear-gradient(135deg, #b51730, #8d1e25);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(230,57,70,0.55);
+}
+</style>
+{% endblock %}
+
+
+
