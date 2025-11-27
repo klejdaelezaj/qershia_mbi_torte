@@ -127,3 +127,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Media files (Images uploaded)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+# Ku Django e dërgon përdoruesin nëse nuk është i loguar
+LOGIN_URL = '/login/'
+
+# Ku Django e dërgon përdoruesin pasi të logohesh me sukses
+LOGIN_REDIRECT_URL = '/'  # mund ta vendosësh edhe /my-orders/ ose /cart/
